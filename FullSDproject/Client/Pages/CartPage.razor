@@ -1,0 +1,20 @@
+﻿@page "/cart"
+@inject NavigationManager NavManager
+
+<h1>CartPage</h1>
+<p>This page does not have any functionality yet.</p>
+
+<label for="paymentType">Choose a payment method:</label>
+<select name="paymentType">
+    <option value="CreditCard">Credit Card</option>
+    <option value="GiftCard">Gift Card</option>
+</select>
+<hr />
+<button class="btn btn-primary" @onclick="ToStore">Back to store</button>
+
+@code {
+    private void ToStore()
+    {
+        NavManager.NavigateTo("/store");
+    }
+}

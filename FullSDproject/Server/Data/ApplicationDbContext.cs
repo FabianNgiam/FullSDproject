@@ -1,4 +1,6 @@
-﻿using FullSDproject.Server.Models;
+﻿using FullSDproject.Server.Configurations.Entities;
+using FullSDproject.Server.Models;
+using FullSDproject.Shared.Domain;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +18,14 @@ namespace FullSDproject.Server.Data
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
+        }
+
+        public DbSet<Game> Games { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+            builder.ApplyConfiguration(new GameSeedConfiguration());
         }
     }
 }

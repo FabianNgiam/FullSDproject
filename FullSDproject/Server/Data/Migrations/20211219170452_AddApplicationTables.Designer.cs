@@ -4,14 +4,16 @@ using FullSDproject.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FullSDproject.Server.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20211219170452_AddApplicationTables")]
+    partial class AddApplicationTables
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -136,8 +138,8 @@ namespace FullSDproject.Server.Data.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2021, 12, 20, 1, 13, 8, 8, DateTimeKind.Local).AddTicks(138),
-                            DateUpdated = new DateTime(2021, 12, 20, 1, 13, 8, 8, DateTimeKind.Local).AddTicks(7602),
+                            DateCreated = new DateTime(2021, 12, 20, 1, 4, 52, 285, DateTimeKind.Local).AddTicks(2245),
+                            DateUpdated = new DateTime(2021, 12, 20, 1, 4, 52, 286, DateTimeKind.Local).AddTicks(615),
                             Developer = "Cheesy Studios",
                             Genre = "Puzzle",
                             Price = 2f,
@@ -152,8 +154,8 @@ namespace FullSDproject.Server.Data.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2021, 12, 20, 1, 13, 8, 8, DateTimeKind.Local).AddTicks(8449),
-                            DateUpdated = new DateTime(2021, 12, 20, 1, 13, 8, 8, DateTimeKind.Local).AddTicks(8453),
+                            DateCreated = new DateTime(2021, 12, 20, 1, 4, 52, 286, DateTimeKind.Local).AddTicks(1490),
+                            DateUpdated = new DateTime(2021, 12, 20, 1, 4, 52, 286, DateTimeKind.Local).AddTicks(1495),
                             Developer = "Cheesy Studios",
                             Genre = "Puzzle",
                             Price = 3f,

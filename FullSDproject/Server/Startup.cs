@@ -1,5 +1,7 @@
 using FullSDproject.Server.Data;
+using FullSDproject.Server.IRepository;
 using FullSDproject.Server.Models;
+using FullSDproject.Server.Repository;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -40,6 +42,8 @@ namespace FullSDproject.Server
 
             services.AddAuthentication()
                 .AddIdentityServerJwt();
+
+            services.AddTransient<IUnitOfWork, UnitOfWork>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using FullSDproject.Server.Data;
 using FullSDproject.Shared.Domain;
+using FullSDproject.Server.IRepository;
 
 namespace FullSDproject.Server.Controllers
 {
@@ -14,32 +15,47 @@ namespace FullSDproject.Server.Controllers
     [ApiController]
     public class GamesController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        //Refactored
+        //private readonly ApplicationDbContext _context;
+        private readonly IUnitOfWork _unitOfWork;
 
-        public GamesController(ApplicationDbContext context)
+        //Refactored
+        //public GamesController(ApplicationDbContext context)
+        public GamesController(IUnitOfWork unitOfWork)
         {
-            _context = context;
+            //Refactored
+            //_context = context;
+            _unitOfWork = unitOfWork;
         }
 
         // GET: api/Games
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Game>>> GetGames()
+        //Refactored
+        //public async Task<ActionResult<IEnumerable<Game>>> GetGames()
+        public async Task<IActionResult> GetGames()
         {
-            return await _context.Games.ToListAsync();
+            //Refactored
+            //return await _context.Games.ToListAsync();
+            var games = await _unitOfWork.Games.GetAll();
+            return Ok(games);
         }
 
         // GET: api/Games/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Game>> GetGame(int id)
+        //Refactored
+        //public async Task<ActionResult<Game>> GetGame(int id)
+        public async Task<IActionResult> GetGame(int id)
         {
-            var game = await _context.Games.FindAsync(id);
+            //Refactored
+            //var game = await _context.Games.FindAsync(id);
+            var game = await _unitOfWork.Games.Get(q => q.Id == id);
 
             if (game == null)
             {
                 return NotFound();
             }
 
-            return game;
+            return Ok(game);
         }
 
         // PUT: api/Games/5
@@ -52,15 +68,21 @@ namespace FullSDproject.Server.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(game).State = EntityState.Modified;
+            //Refactored
+            //_context.Entry(game).State = EntityState.Modified;
+            _unitOfWork.Games.Update(game);
 
             try
             {
-                await _context.SaveChangesAsync();
+                //Refactored
+                //await _context.SaveChangesAsync();
+                await _unitOfWork.Save(HttpContext);
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!GameExists(id))
+                //Refactored
+                //if (!GameExists(id))
+                if (!await GameExists(id))
                 {
                     return NotFound();
                 }
@@ -78,8 +100,11 @@ namespace FullSDproject.Server.Controllers
         [HttpPost]
         public async Task<ActionResult<Game>> PostGame(Game game)
         {
-            _context.Games.Add(game);
-            await _context.SaveChangesAsync();
+            //Refactored
+            //_context.Games.Add(game);
+            //await _context.SaveChangesAsync();
+            await _unitOfWork.Games.Insert(game);
+            await _unitOfWork.Save(HttpContext);
 
             return CreatedAtAction("GetGame", new { id = game.Id }, game);
         }
@@ -88,21 +113,31 @@ namespace FullSDproject.Server.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteGame(int id)
         {
-            var game = await _context.Games.FindAsync(id);
+            //Refactored
+            //var game = await _context.Games.FindAsync(id);
+            var game = await _unitOfWork.Games.Get(q => q.Id == id);
             if (game == null)
             {
                 return NotFound();
             }
 
-            _context.Games.Remove(game);
-            await _context.SaveChangesAsync();
+            //Refactored
+            //_context.Games.Remove(game);
+            //await _context.SaveChangesAsync();
+            await _unitOfWork.Games.Delete(id);
+            await _unitOfWork.Save(HttpContext);
 
             return NoContent();
         }
 
-        private bool GameExists(int id)
+        //Refactored
+        //private bool GameExists(int id)
+        private async Task<bool> GameExists(int id)
         {
-            return _context.Games.Any(e => e.Id == id);
+            //Refactored
+            //return _context.Games.Any(e => e.Id == id);
+            var game = await _unitOfWork.Games.Get(q => q.Id == id);
+            return game != null;
         }
     }
 }

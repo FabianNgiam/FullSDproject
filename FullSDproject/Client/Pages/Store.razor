@@ -7,9 +7,9 @@
 <button class="btn btn-primary" @onclick="ToCart">Go to cart</button>
 
 @if (Games == null)
- {
+{
     <div class="alert alert-info">Loading Games...</div>
- }
+}
 else
 {
     <table class="table table-responsive">
@@ -21,16 +21,25 @@ else
         </thead>
         <tbody>
             @foreach (var game in Games)
-             {
+            {
                 <tr>
                     <td>@game.Title</td>
                     <td>$@game.Price</td>
                     <td><button class="btn btn-primary" @onclick="ToCart">Add to cart</button></td>
                 </tr>
-             }
+            }
         </tbody>
     </table>
 }
+
+<div class="header"><h3>Recommended</h3></div>
+<div class="container flex">
+    <StoreCard />
+    <StoreCard />
+    <StoreCard />
+    <StoreCard />
+    <StoreCard />
+</div>
 
 <hr />
 <footer>&copy The Cyclosion 2021-2022</footer>

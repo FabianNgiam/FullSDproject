@@ -1,0 +1,29 @@
+﻿html, body {
+    height: 100%;
+    margin: 0;
+}
+.Main {
+    height: 100%;
+    overflow: auto;
+    background-color: #1ca4c9;
+}
+.GameBar {
+    background-color: lightblue;
+    justify-items: left;
+    display: flex;
+    width: 200px;
+    height: 100%;
+    flex-direction: column;
+}
+.Game {
+    display: flex;
+    border-width: 2px;
+    background-color: darkblue;
+    justify-items: center;
+    text-align: center;
+    width: 150px;
+    height: fit-content;
+}
+.GameText {
+    color: white;
+}

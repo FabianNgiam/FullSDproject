@@ -1,0 +1,16 @@
+﻿@page "/gamelibrary"
+
+<h1>Game Library</h1>
+
+<AuthorizeView>
+    <Authorized>
+        <p>There are games here.</p>
+    </Authorized>
+    <NotAuthorized>
+        <p>Log in to see your games.</p>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+
+}

@@ -50,6 +50,7 @@ namespace FullSDproject.Server.Repository
         public IGenericRepository<Achievement> Achievements
             => _achievements ??= new GenericRepository<Achievement>(_context);
 
+
         public void Dispose()
         {
             _context.Dispose();

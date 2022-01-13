@@ -1,0 +1,51 @@
+﻿@page "/store"
+@inject NavigationManager NavManager
+@inject HttpClient _client
+@inject IJSRuntime js
+
+<h1>Store</h1>
+<button class="btn btn-primary" @onclick="ToCart">Go to cart</button>
+
+@if (Games == null)
+{
+    <div class="alert alert-info">Loading Games...</div>
+}
+else
+{
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var game in Games)
+            {
+                <tr>
+                    <td>@game.Title</td>
+                    <td>$@game.Price</td>
+                    <td><button class="btn btn-primary" @onclick="ToCart">Add to cart</button></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+
+<hr />
+<footer>&copy The Cyclosion 2021-2022</footer>
+@code {
+    private void ToCart()
+    {
+        NavManager.NavigateTo("/cart");
+    }
+
+    private List<Game> Games;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Games = await _client.GetFromJsonAsync<List<Game>>("api/games");
+    }
+}

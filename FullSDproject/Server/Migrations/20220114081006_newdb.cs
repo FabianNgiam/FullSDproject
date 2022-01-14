@@ -1,9 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace FullSDproject.Server.Data.Migrations
+namespace FullSDproject.Server.Migrations
 {
-    public partial class CreateIdentitySchema : Migration
+    public partial class newdb : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -63,6 +63,31 @@ namespace FullSDproject.Server.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_DeviceCodes", x => x.UserCode);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Games",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Price = table.Column<float>(type: "real", nullable: false),
+                    Requirements = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Rating = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Genre = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Developer = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Publisher = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Thumbnail = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ReleaseDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Games", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -191,6 +216,16 @@ namespace FullSDproject.Server.Data.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Games",
+                columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdated", "Developer", "Genre", "Price", "Publisher", "Rating", "ReleaseDate", "Requirements", "Thumbnail", "Title", "UpdatedBy" },
+                values: new object[] { 1, "System", new DateTime(2022, 1, 14, 16, 10, 5, 808, DateTimeKind.Local).AddTicks(7689), new DateTime(2022, 1, 14, 16, 10, 5, 809, DateTimeKind.Local).AddTicks(5047), "Cheesy Studios", "Puzzle", 2f, "Milk Games", "PG", new DateTime(2020, 6, 9, 0, 0, 0, 0, DateTimeKind.Unspecified), "Intel Core i5 or higher, NVidia GTX 1650, 8GB of RAM, 10GB of free disk space", "chez.png", "Cheese The Game", "System" });
+
+            migrationBuilder.InsertData(
+                table: "Games",
+                columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdated", "Developer", "Genre", "Price", "Publisher", "Rating", "ReleaseDate", "Requirements", "Thumbnail", "Title", "UpdatedBy" },
+                values: new object[] { 2, "System", new DateTime(2022, 1, 14, 16, 10, 5, 809, DateTimeKind.Local).AddTicks(5904), new DateTime(2022, 1, 14, 16, 10, 5, 809, DateTimeKind.Local).AddTicks(5908), "Cheesy Studios", "Puzzle", 3f, "Milk Games", "PG", new DateTime(2021, 4, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "Intel Core i7 or higher, NVidia RTX 2060, 8GB of RAM, 10GB of free disk space", "chez.png", "Cheese The Game 2", "System" });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -276,6 +311,9 @@ namespace FullSDproject.Server.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "DeviceCodes");
+
+            migrationBuilder.DropTable(
+                name: "Games");
 
             migrationBuilder.DropTable(
                 name: "PersistedGrants");

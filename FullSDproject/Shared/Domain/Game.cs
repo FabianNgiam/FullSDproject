@@ -15,6 +15,7 @@ namespace FullSDproject.Shared.Domain
         public string Genre { get; set; }
         public string Developer { get; set; }
         public string Publisher { get; set; }
+        public string Thumbnail { get; set; }
         public DateTime ReleaseDate { get; set; }
     }
 }

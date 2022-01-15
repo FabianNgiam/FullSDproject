@@ -1,39 +1,45 @@
-﻿.gamebar {
+﻿.library {
+    left: 0px;
+    background-color: black;
+    border: groove 2px darkblue;
+    opacity: 50%;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    overflow-y: scroll;
+}
+.gamebar {
     background-color: cornflowerblue;
-    opacity: 0.5;
+    border:inset blue 2px;
+    opacity: 0.8;
     display: flex;
     flex-direction: column;
+    align-items:stretch;
     left: 0;
-    top: 0;
     height: 100%;
+    width: 160px;
 }
 .gamescroll {
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
+    bottom: 0px;
     height: 90%;
-    width: 160px;
-    position: fixed;
     background-color: #696969;
     opacity: 69%;
     overflow-x: scroll;
-    padding-top: 20px;
 }
 .gamelink{
 
 }
-.library{
-    height: 100%;
-    width: 100%;
-    background-color:black;
-    display: flex;
-    flex-direction: row;
-    justify-content: left;
-}
+
+
 .gamepage {
-    position:absolute;
+    border: 1px solid black;
+    position: absolute;
     right: 0;
     bottom: 0;
-    overflow-x:scroll;
+    overflow-x: scroll;
     height: 500px;
     width: 1000px;
 }

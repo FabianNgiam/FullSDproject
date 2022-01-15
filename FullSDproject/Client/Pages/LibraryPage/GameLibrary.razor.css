@@ -1,0 +1,39 @@
+﻿.gamebar {
+    background-color: cornflowerblue;
+    opacity: 0.5;
+    display: flex;
+    flex-direction: column;
+    left: 0;
+    top: 0;
+    height: 100%;
+}
+.gamescroll {
+    display: flex;
+    flex-direction: column;
+    height: 90%;
+    width: 160px;
+    position: fixed;
+    background-color: #696969;
+    opacity: 69%;
+    overflow-x: scroll;
+    padding-top: 20px;
+}
+.gamelink{
+
+}
+.library{
+    height: 100%;
+    width: 100%;
+    background-color:black;
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+}
+.gamepage {
+    position:absolute;
+    right: 0;
+    bottom: 0;
+    overflow-x:scroll;
+    height: 500px;
+    width: 1000px;
+}

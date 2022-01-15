@@ -1,0 +1,31 @@
+﻿@page "/gamelibrary"
+
+<h1>Game Library</h1>
+
+<AuthorizeView>
+    <Authorized>
+        <div class="library">
+            <div class="gamebar">
+                <div class="gamescroll">
+                    gamescroll
+                    <div class="gamelink">CoolGame</div>
+                    <div class="gamelink">CoolGame</div>
+                    <div class="gamelink">CoolGame</div>
+                    <div class="gamelink">CoolGame</div>
+                    <div class="gamelink">CoolGame</div>
+                    <div class="gamelink">CoolGame</div>
+                    <div class="gamelink">CoolGame</div>
+                    <div class="gamelink">CoolGame</div>
+                </div>
+            </div>
+            <GameLibraryPage/>
+        </div>
+    </Authorized>
+    <NotAuthorized>
+        <p>Log in to see your games.</p>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    
+}

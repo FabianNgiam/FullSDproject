@@ -7,7 +7,7 @@
         <div class="library">
             <div class="gamebar">
 
-                <div class="gamelink" @onclick="updateGamePage()">@title</div>
+                <div class="gamelink" @onclick="updateGamePage">@title</div>
                 <div class="gamelink">CoolGame</div>
                 <div class="gamelink">CoolGame</div>
                 <div class="gamelink">CoolGame</div>
@@ -35,7 +35,7 @@
 @code {
     private string title = "CoolGame";
 
-    EventCallback updateGamePage()
+    private void updateGamePage()
     {
         title = "UncoolGame";
     }

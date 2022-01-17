@@ -4,14 +4,16 @@ using FullSDproject.Server.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace FullSDproject.Server.Data.Migrations
+namespace FullSDproject.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220117124011_newdb")]
+    partial class newdb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -121,6 +123,9 @@ namespace FullSDproject.Server.Data.Migrations
                     b.Property<string>("Requirements")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Thumbnail")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
@@ -136,15 +141,16 @@ namespace FullSDproject.Server.Data.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2021, 12, 20, 1, 13, 8, 8, DateTimeKind.Local).AddTicks(138),
-                            DateUpdated = new DateTime(2021, 12, 20, 1, 13, 8, 8, DateTimeKind.Local).AddTicks(7602),
+                            DateCreated = new DateTime(2022, 1, 17, 20, 40, 10, 575, DateTimeKind.Local).AddTicks(9077),
+                            DateUpdated = new DateTime(2022, 1, 17, 20, 40, 10, 576, DateTimeKind.Local).AddTicks(6567),
                             Developer = "Cheesy Studios",
                             Genre = "Puzzle",
                             Price = 2f,
                             Publisher = "Milk Games",
                             Rating = "PG",
-                            ReleaseDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReleaseDate = new DateTime(2021, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Requirements = "Intel Core i5 or higher, NVidia GTX 1650, 8GB of RAM, 10GB of free disk space",
+                            Thumbnail = "chez.png",
                             Title = "Cheese The Game",
                             UpdatedBy = "System"
                         },
@@ -152,15 +158,16 @@ namespace FullSDproject.Server.Data.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2021, 12, 20, 1, 13, 8, 8, DateTimeKind.Local).AddTicks(8449),
-                            DateUpdated = new DateTime(2021, 12, 20, 1, 13, 8, 8, DateTimeKind.Local).AddTicks(8453),
+                            DateCreated = new DateTime(2022, 1, 17, 20, 40, 10, 576, DateTimeKind.Local).AddTicks(7422),
+                            DateUpdated = new DateTime(2022, 1, 17, 20, 40, 10, 576, DateTimeKind.Local).AddTicks(7426),
                             Developer = "Cheesy Studios",
                             Genre = "Puzzle",
                             Price = 3f,
                             Publisher = "Milk Games",
                             Rating = "PG",
-                            ReleaseDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            ReleaseDate = new DateTime(2022, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Requirements = "Intel Core i7 or higher, NVidia RTX 2060, 8GB of RAM, 10GB of free disk space",
+                            Thumbnail = "chez.png",
                             Title = "Cheese The Game 2",
                             UpdatedBy = "System"
                         });

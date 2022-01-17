@@ -22,7 +22,7 @@ else
                     <div class="card-body">
                         <h5 class="card-title">@game.Title</h5>
                         <p class="card-text">@game.Publisher</p>
-                        <a href="" class="btn btn-primary">Add to cart</a>
+                        <a href="" class="btn btn-primary">@(game.Price.ToString("C"))</a>
                     </div>
                 </div>
             </div>

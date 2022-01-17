@@ -7,7 +7,7 @@
         <div class="library">
             <div class="gamebar">
 
-                <div class="gamelink">CoolGame</div>
+                <div class="gamelink" @onclick="updateGamePage()">@title</div>
                 <div class="gamelink">CoolGame</div>
                 <div class="gamelink">CoolGame</div>
                 <div class="gamelink">CoolGame</div>
@@ -20,6 +20,7 @@
             <div class="gamepage">
                 <GameLibraryPage />
             </div>
+            <div id="gay"></div>
         </div>
             
             
@@ -30,11 +31,13 @@
     </NotAuthorized>
 </AuthorizeView>
 
-@code {
-    
 
-    void updateGamePage(int id) 
-    { 
-        
+@code {
+    private string title = "CoolGame";
+
+    EventCallback updateGamePage()
+    {
+        title = "UncoolGame";
     }
+
 }

@@ -15,19 +15,15 @@
     top: 0;
     overflow-y: scroll;
 }
-.gamescroll {
-    display: flex;
-    flex-direction: column;
-    height: 90%;
-    width: 80%;
-    background-color: #696969;
-    opacity: 69%;
-    padding-right: 17px;
-    box-sizing: content-box;
-}
+
 .gamelink{
     text-decoration:black;
+    width:160px;
 }
+.gamelink:focus {
+    width:200px;
+}
+  
 .library{
     height: 600px;
     width: 1200px;

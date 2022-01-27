@@ -21,6 +21,13 @@ namespace FullSDproject.Server.Data
         }
 
         public DbSet<Game> Games { get; set; }
+        public DbSet<News> News { get; set; }
+        public DbSet<Achievement> Achievements { get; set; }
+        public DbSet<Copy> Copies { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<Payment> Payments { get; set; }
+        public DbSet<Stats> Stats { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

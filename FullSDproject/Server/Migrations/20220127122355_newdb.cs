@@ -8,6 +8,25 @@ namespace FullSDproject.Server.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Achievements",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    StatsID = table.Column<int>(type: "int", nullable: false),
+                    Condition = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Fulfillment = table.Column<bool>(type: "bit", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Achievements", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -26,6 +45,7 @@ namespace FullSDproject.Server.Migrations
                 columns: table => new
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Age = table.Column<int>(type: "int", nullable: false),
                     UserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "nvarchar(256)", maxLength: 256, nullable: true),
@@ -108,6 +128,26 @@ namespace FullSDproject.Server.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PersistedGrants", x => x.Key);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Username = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Level = table.Column<int>(type: "int", nullable: false),
+                    Age = table.Column<int>(type: "int", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -216,15 +256,146 @@ namespace FullSDproject.Server.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.InsertData(
-                table: "Games",
-                columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdated", "Developer", "Genre", "Price", "Publisher", "Rating", "ReleaseDate", "Requirements", "Thumbnail", "Title", "UpdatedBy" },
-                values: new object[] { 1, "System", new DateTime(2022, 1, 17, 20, 40, 10, 575, DateTimeKind.Local).AddTicks(9077), new DateTime(2022, 1, 17, 20, 40, 10, 576, DateTimeKind.Local).AddTicks(6567), "Cheesy Studios", "Puzzle", 2f, "Milk Games", "PG", new DateTime(2021, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Intel Core i5 or higher, NVidia GTX 1650, 8GB of RAM, 10GB of free disk space", "chez.png", "Cheese The Game", "System" });
+            migrationBuilder.CreateTable(
+                name: "News",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    GameID = table.Column<int>(type: "int", nullable: false),
+                    Writer = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    NewsEntry = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_News", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_News_Games_GameID",
+                        column: x => x.GameID,
+                        principalTable: "Games",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Payments",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CreditCard = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<int>(type: "int", nullable: false),
+                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Payments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Payments_Users_UserID",
+                        column: x => x.UserID,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    PaymentId = table.Column<int>(type: "int", nullable: false),
+                    OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TotalPrice = table.Column<float>(type: "real", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Orders_Payments_PaymentId",
+                        column: x => x.PaymentId,
+                        principalTable: "Payments",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Copies",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    GameId = table.Column<int>(type: "int", nullable: false),
+                    OrderId = table.Column<int>(type: "int", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Copies", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Copies_Games_GameId",
+                        column: x => x.GameId,
+                        principalTable: "Games",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Copies_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Stats",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    CopyID = table.Column<int>(type: "int", nullable: false),
+                    Hours = table.Column<float>(type: "real", nullable: false),
+                    Completion = table.Column<int>(type: "int", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Stats", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Stats_Copies_CopyID",
+                        column: x => x.CopyID,
+                        principalTable: "Copies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.InsertData(
                 table: "Games",
                 columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdated", "Developer", "Genre", "Price", "Publisher", "Rating", "ReleaseDate", "Requirements", "Thumbnail", "Title", "UpdatedBy" },
-                values: new object[] { 2, "System", new DateTime(2022, 1, 17, 20, 40, 10, 576, DateTimeKind.Local).AddTicks(7422), new DateTime(2022, 1, 17, 20, 40, 10, 576, DateTimeKind.Local).AddTicks(7426), "Cheesy Studios", "Puzzle", 3f, "Milk Games", "PG", new DateTime(2022, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), "Intel Core i7 or higher, NVidia RTX 2060, 8GB of RAM, 10GB of free disk space", "chez.png", "Cheese The Game 2", "System" });
+                values: new object[] { 1, "System", new DateTime(2022, 1, 27, 20, 23, 54, 669, DateTimeKind.Local).AddTicks(8329), new DateTime(2022, 1, 27, 20, 23, 54, 670, DateTimeKind.Local).AddTicks(8827), "Cheesy Studios", "Puzzle", 2f, "Milk Games", "PG", new DateTime(2021, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Intel Core i5 or higher, NVidia GTX 1650, 8GB of RAM, 10GB of free disk space", "chez.png", "Cheese The Game", "System" });
+
+            migrationBuilder.InsertData(
+                table: "Games",
+                columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdated", "Developer", "Genre", "Price", "Publisher", "Rating", "ReleaseDate", "Requirements", "Thumbnail", "Title", "UpdatedBy" },
+                values: new object[] { 2, "System", new DateTime(2022, 1, 27, 20, 23, 54, 670, DateTimeKind.Local).AddTicks(9744), new DateTime(2022, 1, 27, 20, 23, 54, 670, DateTimeKind.Local).AddTicks(9749), "Cheesy Studios", "Puzzle", 3f, "Milk Games", "PG", new DateTime(2022, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), "Intel Core i7 or higher, NVidia RTX 2060, 8GB of RAM, 10GB of free disk space", "chez.png", "Cheese The Game 2", "System" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -266,6 +437,16 @@ namespace FullSDproject.Server.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Copies_GameId",
+                table: "Copies",
+                column: "GameId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Copies_OrderId",
+                table: "Copies",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_DeviceCodes_DeviceCode",
                 table: "DeviceCodes",
                 column: "DeviceCode",
@@ -275,6 +456,21 @@ namespace FullSDproject.Server.Migrations
                 name: "IX_DeviceCodes_Expiration",
                 table: "DeviceCodes",
                 column: "Expiration");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_News_GameID",
+                table: "News",
+                column: "GameID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_PaymentId",
+                table: "Orders",
+                column: "PaymentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Payments_UserID",
+                table: "Payments",
+                column: "UserID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PersistedGrants_Expiration",
@@ -290,10 +486,18 @@ namespace FullSDproject.Server.Migrations
                 name: "IX_PersistedGrants_SubjectId_SessionId_Type",
                 table: "PersistedGrants",
                 columns: new[] { "SubjectId", "SessionId", "Type" });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Stats_CopyID",
+                table: "Stats",
+                column: "CopyID");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Achievements");
+
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -313,16 +517,34 @@ namespace FullSDproject.Server.Migrations
                 name: "DeviceCodes");
 
             migrationBuilder.DropTable(
-                name: "Games");
+                name: "News");
 
             migrationBuilder.DropTable(
                 name: "PersistedGrants");
+
+            migrationBuilder.DropTable(
+                name: "Stats");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Copies");
+
+            migrationBuilder.DropTable(
+                name: "Games");
+
+            migrationBuilder.DropTable(
+                name: "Orders");
+
+            migrationBuilder.DropTable(
+                name: "Payments");
+
+            migrationBuilder.DropTable(
+                name: "Users");
         }
     }
 }

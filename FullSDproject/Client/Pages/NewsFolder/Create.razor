@@ -1,0 +1,17 @@
+﻿@page "/publish-news"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3>Publish News Entry</h3>
+
+<FormComponent ButtonText="Publish" news="news" OnValidSubmit="@PublishNews" />
+
+@code {
+    News news = new News();
+
+    private async Task PublishNews()
+    {
+        await _client.PostAsJsonAsync("api/news", news);
+        _navManager.NavigateTo("/news-page/");
+    }
+}

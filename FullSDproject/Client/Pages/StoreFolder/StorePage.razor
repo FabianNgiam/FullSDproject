@@ -3,6 +3,10 @@
 @inject HttpClient _client
 @inject IJSRuntime js
 
+@* Error handling *@
+@inject HttpInterceptorService _interceptor 
+@implements IDisposable
+
 <h1>Store</h1>
 <button class="btn btn-primary" @onclick="ToCart">Go to cart</button>
 
@@ -42,6 +46,15 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        //error handling
+        _interceptor.MonitorEvent();
+        //line break
         Games = await _client.GetFromJsonAsync<List<Game>>("api/games");
+    }
+
+    //error handling
+    public void Dispose()
+    {
+        _interceptor.DisposeEvent();
     }
 }

@@ -36,7 +36,7 @@ namespace FullSDproject.Server.Controllers
         {
             //Refactored
             //return await _context.News.ToListAsync();
-            var News = await _unitOfWork.News.GetAll();
+            var News = await _unitOfWork.News.GetAll(includes: q => q.Include(x => x.Game));
             return Ok(News);
         }
 

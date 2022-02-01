@@ -1,0 +1,48 @@
+﻿@page "/news-page"
+@inject HttpClient _client
+
+@* Error handling *@
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
+
+<h3>NewsPage</h3>
+
+@if (News == null)
+{
+    <div class="alert alert-info">Loading News...</div>
+}
+else
+{
+    //Below is the container for the different games.
+    <div class="container flex">
+        @foreach (var news in News)
+        {
+            <div class="StoreCard">
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">@news.Game.Title</h5>
+                        <p class="card-text">@news.NewsEntry</p>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private List<News> News;
+
+    protected override async Task OnInitializedAsync()
+    {
+        //error handling
+        _interceptor.MonitorEvent();
+        //line break
+        News = await _client.GetFromJsonAsync<List<News>>("api/news");
+    }
+
+    //error handling
+    public void Dispose()
+    {
+        _interceptor.DisposeEvent();
+    }
+}

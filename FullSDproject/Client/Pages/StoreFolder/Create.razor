@@ -1,0 +1,17 @@
+﻿@page "/publish-game"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3>Publish new game</h3>
+
+<FormComponent ButtonText="Publish" game="game" OnValidSubmit="@PublishGame" />
+
+@code {
+    Game game = new Game();
+
+    private async Task PublishGame()
+    {
+        await _client.PostAsJsonAsync("api/games", game);
+        _navManager.NavigateTo("/store/");
+    }
+}

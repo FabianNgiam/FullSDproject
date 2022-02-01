@@ -1,0 +1,92 @@
+﻿<EditForm Model="@game" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <fieldset disabled="@Disabled">
+        <div class="form-group">
+            <label>Title: </label>
+            <div>
+                <InputText @bind-Value="@game.Title" class="form-control" />
+                <ValidationMessage For="@(() => game.Title)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Price: </label>
+            <div>
+                <InputNumber @bind-Value="@game.Price" class="form-control" />
+                <ValidationMessage For="@(() => game.Price)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>PC Requirements: </label>
+            <div>
+                <InputText @bind-Value="@game.Requirements" class="form-control" />
+                <ValidationMessage For="@(() => game.Requirements)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Age Rating: </label>
+            <div>
+                <InputText @bind-Value="@game.Rating" class="form-control" />
+                <ValidationMessage For="@(() => game.Rating)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Genre: </label>
+            <div>
+                <InputText @bind-Value="@game.Genre" class="form-control" />
+                <ValidationMessage For="@(() => game.Genre)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Developer: </label>
+            <div>
+                <InputText @bind-Value="@game.Developer" class="form-control" />
+                <ValidationMessage For="@(() => game.Developer)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Publisher: </label>
+            <div>
+                <InputText @bind-Value="@game.Publisher" class="form-control" />
+                <ValidationMessage For="@(() => game.Publisher)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Thumbnail: </label>
+            <div>
+                <InputText @bind-Value="@game.Thumbnail" class="form-control" />
+                <ValidationMessage For="@(() => game.Thumbnail)" />
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Release Date: </label>
+            <div>
+                <InputDate @bind-Value="@game.ReleaseDate" class="form-control" />
+                <ValidationMessage For="@(() => game.ReleaseDate)" />
+            </div>
+        </div>
+    </fieldset>
+
+    @if (!Disabled)
+    {
+        <button type="submit" class="btn btn-success btn-block">
+            @ButtonText
+        </button>
+    }
+    <BackToList Target="store"/>
+</EditForm>
+
+@code {
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public Game game { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+}

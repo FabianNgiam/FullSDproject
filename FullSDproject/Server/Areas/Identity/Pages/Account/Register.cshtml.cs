@@ -86,7 +86,7 @@ namespace FullSDproject.Server.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.UserName, Email = Input.Email, Age = Input.Age };
+                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, Age = Input.Age, DisplayName = Input.UserName };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

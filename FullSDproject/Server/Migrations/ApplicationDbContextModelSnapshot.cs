@@ -34,6 +34,9 @@ namespace FullSDproject.Server.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("DisplayName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
@@ -209,8 +212,8 @@ namespace FullSDproject.Server.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2022, 1, 27, 20, 23, 54, 669, DateTimeKind.Local).AddTicks(8329),
-                            DateUpdated = new DateTime(2022, 1, 27, 20, 23, 54, 670, DateTimeKind.Local).AddTicks(8827),
+                            DateCreated = new DateTime(2022, 1, 30, 0, 20, 23, 461, DateTimeKind.Local).AddTicks(2846),
+                            DateUpdated = new DateTime(2022, 1, 30, 0, 20, 23, 462, DateTimeKind.Local).AddTicks(275),
                             Developer = "Cheesy Studios",
                             Genre = "Puzzle",
                             Price = 2f,
@@ -226,8 +229,8 @@ namespace FullSDproject.Server.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2022, 1, 27, 20, 23, 54, 670, DateTimeKind.Local).AddTicks(9744),
-                            DateUpdated = new DateTime(2022, 1, 27, 20, 23, 54, 670, DateTimeKind.Local).AddTicks(9749),
+                            DateCreated = new DateTime(2022, 1, 30, 0, 20, 23, 462, DateTimeKind.Local).AddTicks(1117),
+                            DateUpdated = new DateTime(2022, 1, 30, 0, 20, 23, 462, DateTimeKind.Local).AddTicks(1121),
                             Developer = "Cheesy Studios",
                             Genre = "Puzzle",
                             Price = 3f,

@@ -14,12 +14,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using FullSDproject.Shared.Domain;
+using System.Net.Http;
+using System.Net.Http.Json;
 
 namespace FullSDproject.Server.Areas.Identity.Pages.Account
 {
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
+        static readonly HttpClient _client = new HttpClient();
+
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
@@ -87,6 +92,8 @@ namespace FullSDproject.Server.Areas.Identity.Pages.Account
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email, Age = Input.Age, DisplayName = Input.UserName };
+                User user1 = new User { Username = Input.UserName, Email = Input.Email, Level = 0, Age = Input.Age };
+                await _client.PostAsJsonAsync("https://localhost:44369/api/users", user1);
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

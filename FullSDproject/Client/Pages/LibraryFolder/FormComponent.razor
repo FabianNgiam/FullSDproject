@@ -1,0 +1,48 @@
+﻿@inject HttpClient _client
+
+@* THIS IS FOR TESTING AND DEBUGGING *@
+
+<EditForm Model="@copy" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <fieldset disabled="@Disabled">
+        <div class="form-group">
+            <label>Game: </label>
+            <div>
+                <InputSelect @bind-Value="copy.GameId" class="form-control">
+                    <option value="">-- Select Name --</option>
+                    @if (Games != null)
+                    {
+                        foreach (var game in Games)
+                        {
+                            <option value="@game.Id">@game.Title</option>
+                        }
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(() => copy.GameId)" />
+            </div>
+        </div>
+    </fieldset>
+
+    @if (!Disabled)
+    {
+        <button type="submit" class="btn btn-success btn-block">
+            @ButtonText
+        </button>
+    }
+    <BackToList Target="news-page" />
+</EditForm>
+
+@code {
+    [Parameter] public bool Disabled { get; set; } = false;
+    [Parameter] public Copy copy { get; set; }
+    [Parameter] public string ButtonText { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+    private IList<Game> Games;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Games = await _client.GetFromJsonAsync<List<Game>>("api/games");
+    }
+}

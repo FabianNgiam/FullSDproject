@@ -1,5 +1,7 @@
 ﻿@page "/cart"
-@inject NavigationManager NavManager
+@inject NavigationManager _navManager
+@inject HttpClient _client
+
 
 <h1>CartPage</h1>
 <p>This page does not have any functionality yet.</p>
@@ -10,12 +12,22 @@
     <option value="GiftCard">Gift Card</option>
 </select>
 
+<FormComponent ButtonText="Check out" order="order" OnValidSubmit="@addOrder" />
+
 <hr />
 <button class="btn btn-primary" @onclick="ToStore">Back to store</button>
 
 @code {
+    Order order = new Order();
+
     private void ToStore()
     {
-        NavManager.NavigateTo("/store");
+        _navManager.NavigateTo("/store");
+    }
+
+    private async Task addOrder()
+    {
+        await _client.PostAsJsonAsync("api/orders", order);
+        _navManager.NavigateTo("/store/");
     }
 }

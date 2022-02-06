@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FullSDproject.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220206020403_newdb")]
+    [Migration("20220206052700_newdb")]
     partial class newdb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -214,8 +214,8 @@ namespace FullSDproject.Server.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2022, 2, 6, 10, 4, 3, 552, DateTimeKind.Local).AddTicks(4001),
-                            DateUpdated = new DateTime(2022, 2, 6, 10, 4, 3, 553, DateTimeKind.Local).AddTicks(1853),
+                            DateCreated = new DateTime(2022, 2, 6, 13, 26, 59, 744, DateTimeKind.Local).AddTicks(5722),
+                            DateUpdated = new DateTime(2022, 2, 6, 13, 26, 59, 745, DateTimeKind.Local).AddTicks(4945),
                             Developer = "Cheesy Studios",
                             Genre = "Puzzle",
                             Price = 2f,
@@ -231,8 +231,8 @@ namespace FullSDproject.Server.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2022, 2, 6, 10, 4, 3, 553, DateTimeKind.Local).AddTicks(2838),
-                            DateUpdated = new DateTime(2022, 2, 6, 10, 4, 3, 553, DateTimeKind.Local).AddTicks(2843),
+                            DateCreated = new DateTime(2022, 2, 6, 13, 26, 59, 745, DateTimeKind.Local).AddTicks(5956),
+                            DateUpdated = new DateTime(2022, 2, 6, 13, 26, 59, 745, DateTimeKind.Local).AddTicks(5962),
                             Developer = "Cheesy Studios",
                             Genre = "Puzzle",
                             Price = 3f,

@@ -1,5 +1,6 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
+
 
 namespace FullSDproject.Server.Migrations
 {
@@ -394,12 +395,12 @@ namespace FullSDproject.Server.Migrations
             migrationBuilder.InsertData(
                 table: "Games",
                 columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdated", "Developer", "Genre", "Price", "Publisher", "Rating", "ReleaseDate", "Requirements", "Thumbnail", "Title", "UpdatedBy" },
-                values: new object[] { 1, "System", new DateTime(2022, 2, 6, 10, 4, 3, 552, DateTimeKind.Local).AddTicks(4001), new DateTime(2022, 2, 6, 10, 4, 3, 553, DateTimeKind.Local).AddTicks(1853), "Cheesy Studios", "Puzzle", 2f, "Milk Games", "PG", new DateTime(2021, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Intel Core i5 or higher, NVidia GTX 1650, 8GB of RAM, 10GB of free disk space", "chez.png", "Cheese The Game", "System" });
+                values: new object[] { 1, "System", new DateTime(2022, 2, 6, 13, 26, 59, 744, DateTimeKind.Local).AddTicks(5722), new DateTime(2022, 2, 6, 13, 26, 59, 745, DateTimeKind.Local).AddTicks(4945), "Cheesy Studios", "Puzzle", 2f, "Milk Games", "PG", new DateTime(2021, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Intel Core i5 or higher, NVidia GTX 1650, 8GB of RAM, 10GB of free disk space", "chez.png", "Cheese The Game", "System" });
 
             migrationBuilder.InsertData(
                 table: "Games",
                 columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdated", "Developer", "Genre", "Price", "Publisher", "Rating", "ReleaseDate", "Requirements", "Thumbnail", "Title", "UpdatedBy" },
-                values: new object[] { 2, "System", new DateTime(2022, 2, 6, 10, 4, 3, 553, DateTimeKind.Local).AddTicks(2838), new DateTime(2022, 2, 6, 10, 4, 3, 553, DateTimeKind.Local).AddTicks(2843), "Cheesy Studios", "Puzzle", 3f, "Milk Games", "PG", new DateTime(2022, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), "Intel Core i7 or higher, NVidia RTX 2060, 8GB of RAM, 10GB of free disk space", "chez.png", "Cheese The Game 2", "System" });
+                values: new object[] { 2, "System", new DateTime(2022, 2, 6, 13, 26, 59, 745, DateTimeKind.Local).AddTicks(5956), new DateTime(2022, 2, 6, 13, 26, 59, 745, DateTimeKind.Local).AddTicks(5962), "Cheesy Studios", "Puzzle", 3f, "Milk Games", "PG", new DateTime(2022, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), "Intel Core i7 or higher, NVidia RTX 2060, 8GB of RAM, 10GB of free disk space", "chez.png", "Cheese The Game 2", "System" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

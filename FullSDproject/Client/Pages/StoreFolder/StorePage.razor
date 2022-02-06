@@ -2,9 +2,8 @@
 @inject NavigationManager NavManager
 @inject HttpClient _client
 @inject IJSRuntime js
-
 @* Error handling *@
-@inject HttpInterceptorService _interceptor 
+@inject HttpInterceptorService _interceptor
 @implements IDisposable
 
 <h1>Store</h1>
@@ -17,25 +16,28 @@
 else
 {
     //Below is the container for the different games.
-    <div class="container flex">
-        @foreach (var game in Games)
-        {
-            <div class="StoreCard">
-                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="pictures/@game.Thumbnail">
-                    <div class="card-body">
-                        <h5 class="card-title">@game.Title</h5>
-                        <p class="card-text">@game.Publisher</p>
-                        <a href="" class="btn btn-primary">@(game.Price.ToString("C"))</a>
+<table class="table table-responsive" id="bookingsTable"></table>
+        <div class="container flex">
+            @foreach (var game in Games)
+            {
+                <div class="StoreCard">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="pictures/@game.Thumbnail">
+                        <div class="card-body">
+                            <h5 class="card-title">@game.Title</h5>
+                            <p class="card-text">@game.Publisher</p>
+                            <a href="" class="btn btn-primary">@(game.Price.ToString("C"))</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        }
-    </div>
+            }
+        </div>
+        
+    
 }
 
-<hr />
-<footer>&copy The Cyclosion 2021-2022</footer>
+        <hr />
+        <footer>&copy The Cyclosion 2021-2022</footer>
 @code {
     private void ToCart()
     {
@@ -51,10 +53,15 @@ else
         //line break
         Games = await _client.GetFromJsonAsync<List<Game>>("api/games");
     }
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable","#bookingsTable");
+    }
 
     //error handling
     public void Dispose()
     {
+        js.InvokeVoidAsync("AddDataTable","#bookingsTable");
         _interceptor.DisposeEvent();
     }
-}
+    }

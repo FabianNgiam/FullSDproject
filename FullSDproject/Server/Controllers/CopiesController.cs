@@ -36,7 +36,7 @@ namespace FullSDproject.Server.Controllers
         {
             //Refactored
             //return await _context.Copies.ToListAsync();
-            var Copies = await _unitOfWork.Copies.GetAll();
+            var Copies = await _unitOfWork.Copies.GetAll(includes: q => q.Include(x => x.Game).Include(x => x.Order).Include(x => x.Order.Payment).Include(x => x.Order.Payment.User));
             return Ok(Copies);
         }
 

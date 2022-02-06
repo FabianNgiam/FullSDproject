@@ -1,7 +1,5 @@
 ﻿@inject HttpClient _client
 
-@* THIS IS FOR TESTING AND DEBUGGING *@
-
 <EditForm Model="@copy" OnValidSubmit="@OnValidSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
@@ -22,6 +20,23 @@
                 <ValidationMessage For="@(() => copy.GameId)" />
             </div>
         </div>
+
+        <div class="form-group">
+            <label>Order: </label>
+            <div>
+                <InputSelect @bind-Value="copy.OrderId" class="form-control">
+                    <option value="">-- Select Order --</option>
+                    @if (Orders != null)
+                    {
+                        foreach (var order in Orders)
+                        {
+                            <option value="@order.Id">@order.Id</option>
+                        }
+                    }
+                </InputSelect>
+                <ValidationMessage For="@(() => copy.GameId)" />
+            </div>
+        </div>
     </fieldset>
 
     @if (!Disabled)
@@ -30,7 +45,7 @@
             @ButtonText
         </button>
     }
-    <BackToList Target="news-page" />
+    <BackToList Target="cart" />
 </EditForm>
 
 @code {
@@ -40,9 +55,11 @@
     [Parameter] public EventCallback OnValidSubmit { get; set; }
 
     private IList<Game> Games;
+    private IList<Order> Orders;
 
     protected async override Task OnInitializedAsync()
     {
         Games = await _client.GetFromJsonAsync<List<Game>>("api/games");
+        Orders = await _client.GetFromJsonAsync<List<Order>>("api/orders");
     }
 }

@@ -112,25 +112,6 @@ namespace FullSDproject.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Payments",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    CreditCard = table.Column<int>(type: "int", nullable: false),
-                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Payments", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "PersistedGrants",
                 columns: table => new
                 {
@@ -302,12 +283,40 @@ namespace FullSDproject.Server.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Orders",
+                name: "Payments",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     UserID = table.Column<int>(type: "int", nullable: false),
+                    CreditCard = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    expiryMonth = table.Column<int>(type: "int", nullable: false),
+                    expiryYear = table.Column<int>(type: "int", nullable: false),
+                    CVV = table.Column<int>(type: "int", nullable: false),
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UpdatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Payments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Payments_Users_UserID",
+                        column: x => x.UserID,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
                     PaymentId = table.Column<int>(type: "int", nullable: false),
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TotalPrice = table.Column<float>(type: "real", nullable: false),
@@ -323,12 +332,6 @@ namespace FullSDproject.Server.Migrations
                         name: "FK_Orders_Payments_PaymentId",
                         column: x => x.PaymentId,
                         principalTable: "Payments",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Orders_Users_UserID",
-                        column: x => x.UserID,
-                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -391,12 +394,12 @@ namespace FullSDproject.Server.Migrations
             migrationBuilder.InsertData(
                 table: "Games",
                 columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdated", "Developer", "Genre", "Price", "Publisher", "Rating", "ReleaseDate", "Requirements", "Thumbnail", "Title", "UpdatedBy" },
-                values: new object[] { 1, "System", new DateTime(2022, 2, 4, 20, 43, 24, 842, DateTimeKind.Local).AddTicks(2983), new DateTime(2022, 2, 4, 20, 43, 24, 843, DateTimeKind.Local).AddTicks(1958), "Cheesy Studios", "Puzzle", 2f, "Milk Games", "PG", new DateTime(2021, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Intel Core i5 or higher, NVidia GTX 1650, 8GB of RAM, 10GB of free disk space", "chez.png", "Cheese The Game", "System" });
+                values: new object[] { 1, "System", new DateTime(2022, 2, 6, 10, 4, 3, 552, DateTimeKind.Local).AddTicks(4001), new DateTime(2022, 2, 6, 10, 4, 3, 553, DateTimeKind.Local).AddTicks(1853), "Cheesy Studios", "Puzzle", 2f, "Milk Games", "PG", new DateTime(2021, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Intel Core i5 or higher, NVidia GTX 1650, 8GB of RAM, 10GB of free disk space", "chez.png", "Cheese The Game", "System" });
 
             migrationBuilder.InsertData(
                 table: "Games",
                 columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdated", "Developer", "Genre", "Price", "Publisher", "Rating", "ReleaseDate", "Requirements", "Thumbnail", "Title", "UpdatedBy" },
-                values: new object[] { 2, "System", new DateTime(2022, 2, 4, 20, 43, 24, 843, DateTimeKind.Local).AddTicks(3772), new DateTime(2022, 2, 4, 20, 43, 24, 843, DateTimeKind.Local).AddTicks(3781), "Cheesy Studios", "Puzzle", 3f, "Milk Games", "PG", new DateTime(2022, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), "Intel Core i7 or higher, NVidia RTX 2060, 8GB of RAM, 10GB of free disk space", "chez.png", "Cheese The Game 2", "System" });
+                values: new object[] { 2, "System", new DateTime(2022, 2, 6, 10, 4, 3, 553, DateTimeKind.Local).AddTicks(2838), new DateTime(2022, 2, 6, 10, 4, 3, 553, DateTimeKind.Local).AddTicks(2843), "Cheesy Studios", "Puzzle", 3f, "Milk Games", "PG", new DateTime(2022, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), "Intel Core i7 or higher, NVidia RTX 2060, 8GB of RAM, 10GB of free disk space", "chez.png", "Cheese The Game 2", "System" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -469,8 +472,8 @@ namespace FullSDproject.Server.Migrations
                 column: "PaymentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Orders_UserID",
-                table: "Orders",
+                name: "IX_Payments_UserID",
+                table: "Payments",
                 column: "UserID");
 
             migrationBuilder.CreateIndex(

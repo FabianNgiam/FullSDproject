@@ -6,32 +6,27 @@
     <DataAnnotationsValidator />
     <ValidationSummary />
     <fieldset disabled="@Disabled">
- 
-            <div class="form-group">
-                <label>Email:</label>
-                <div>
-                    @* automatically selects your email i guess*@
-                    <AuthorizeView Context="context1">
-                        <InputSelect @bind-Value="order.UserID" class="form-control">
-                            <select value="">--select value--</select>
-                            @if (Users != null)
+        <div class="form-group">
+            <label>Payment options:</label>
+            <div>
+                <AuthorizeView Context="context1">
+                    <InputSelect @bind-Value="order.PaymentId" class="form-control">
+                        <option value="">--select value--</option>
+                        @if (Payments != null)
+                        {
+                            foreach (var payment in Payments)
                             {
-                                foreach (var user in Users)
+                                if (payment.User.Email == context1.User.Identity.Name)
                                 {
-                                    if (user.Email == context1.User.Identity.Name)
-                                    {
-                                        <option value="@user.Id">@user.Email</option>
-                                    }
+                                    <option value="@payment.Id">@payment.FullName - @payment.CreditCard</option>
                                 }
                             }
-                        </InputSelect>
-                        <ValidationMessage For="@(() => order.UserID)" />
-                    </AuthorizeView>
-                </div>
+                        }
+                    </InputSelect>
+                    <ValidationMessage For="@(() => order.PaymentId)" />
+                </AuthorizeView>
             </div>
-
-
-
+        </div>
     </fieldset>
 
     @if (!Disabled)
@@ -48,10 +43,10 @@
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
 
-    private IList<User> Users;
+    private IList<Payment> Payments;
 
     protected async override Task OnInitializedAsync()
     {
-        Users = await _client.GetFromJsonAsync<List<User>>("api/users");
+        Payments = await _client.GetFromJsonAsync<List<Payment>>("api/payments");
     }
 }

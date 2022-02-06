@@ -8,8 +8,8 @@ namespace FullSDproject.Shared.Domain
 {
     public class Order : BaseDomainModel
     {
-        public int UserID { get; set; }
-        public virtual User User { get; set; }
+        //public int UserID { get; set; }
+        //public virtual User User { get; set; }
         public int PaymentId { get; set; }
         public virtual Payment Payment { get; set; }
         public DateTime OrderDate { get; set; }

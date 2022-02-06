@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FullSDproject.Server.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220204124325_newdb")]
+    [Migration("20220206020403_newdb")]
     partial class newdb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -214,8 +214,8 @@ namespace FullSDproject.Server.Migrations
                         {
                             Id = 1,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2022, 2, 4, 20, 43, 24, 842, DateTimeKind.Local).AddTicks(2983),
-                            DateUpdated = new DateTime(2022, 2, 4, 20, 43, 24, 843, DateTimeKind.Local).AddTicks(1958),
+                            DateCreated = new DateTime(2022, 2, 6, 10, 4, 3, 552, DateTimeKind.Local).AddTicks(4001),
+                            DateUpdated = new DateTime(2022, 2, 6, 10, 4, 3, 553, DateTimeKind.Local).AddTicks(1853),
                             Developer = "Cheesy Studios",
                             Genre = "Puzzle",
                             Price = 2f,
@@ -231,8 +231,8 @@ namespace FullSDproject.Server.Migrations
                         {
                             Id = 2,
                             CreatedBy = "System",
-                            DateCreated = new DateTime(2022, 2, 4, 20, 43, 24, 843, DateTimeKind.Local).AddTicks(3772),
-                            DateUpdated = new DateTime(2022, 2, 4, 20, 43, 24, 843, DateTimeKind.Local).AddTicks(3781),
+                            DateCreated = new DateTime(2022, 2, 6, 10, 4, 3, 553, DateTimeKind.Local).AddTicks(2838),
+                            DateUpdated = new DateTime(2022, 2, 6, 10, 4, 3, 553, DateTimeKind.Local).AddTicks(2843),
                             Developer = "Cheesy Studios",
                             Genre = "Puzzle",
                             Price = 3f,
@@ -309,14 +309,9 @@ namespace FullSDproject.Server.Migrations
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("UserID")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("PaymentId");
-
-                    b.HasIndex("UserID");
 
                     b.ToTable("Orders");
                 });
@@ -331,11 +326,14 @@ namespace FullSDproject.Server.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("CVV")
+                        .HasColumnType("int");
+
                     b.Property<string>("CreatedBy")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("CreditCard")
-                        .HasColumnType("int");
+                    b.Property<string>("CreditCard")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
@@ -349,7 +347,18 @@ namespace FullSDproject.Server.Migrations
                     b.Property<string>("UpdatedBy")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("UserID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("expiryMonth")
+                        .HasColumnType("int");
+
+                    b.Property<int>("expiryYear")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserID");
 
                     b.ToTable("Payments");
                 });
@@ -701,13 +710,16 @@ namespace FullSDproject.Server.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.Navigation("Payment");
+                });
+
+            modelBuilder.Entity("FullSDproject.Shared.Domain.Payment", b =>
+                {
                     b.HasOne("FullSDproject.Shared.Domain.User", "User")
                         .WithMany()
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Payment");
 
                     b.Navigation("User");
                 });

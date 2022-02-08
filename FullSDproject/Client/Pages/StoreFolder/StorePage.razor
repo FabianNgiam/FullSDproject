@@ -46,8 +46,9 @@ else
                         *@
                     </td>
                 </tr>
-            }
+             }
         </tbody>
+    </table>
 }
 
         <hr />
@@ -69,12 +70,7 @@ else
     }
     protected async override Task OnAfterRenderAsync(bool firstRender)
     {
-        await js.InvokeVoidAsync("AddDataTable","#bookingsTable");
-    }
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        await js.InvokeVoidAsync("AddDataTable", "#StoreTable");
+        await js.InvokeVoidAsync("AddDataTable","#StoreTable");
     }
 
     //error handling

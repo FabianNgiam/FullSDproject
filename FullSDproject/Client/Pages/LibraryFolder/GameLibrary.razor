@@ -2,6 +2,7 @@
 @inject HttpClient _client
 @* Error handling *@
 @inject HttpInterceptorService _interceptor
+@inject IJSRuntime js
 @implements IDisposable
 
 <h1>Game Library</h1>
@@ -15,7 +16,7 @@
         else
         {
             //Below is the container for the different games.
-            <div class="container flex">
+            @**<div class="container flex">
                 @foreach (var copy in Copies)
                 {
                     if (copy.Order.Payment.User.Email == context.User.Identity.Name)
@@ -31,6 +32,42 @@
                     }
                 }
             </div>
+            *@
+
+            <table class="table table-responsive" id="CopyTable">
+                <thead>
+                    <tr>
+                        <th>Thumbnail</th>
+                        <th>Title</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var copy in Copies)
+                    {
+                        if (copy.Order.Payment.User.Email == context.User.Identity.Name)
+                        {
+                            <tr>
+                                <td><img class="card-img-top" src="pictures/@copy.Game.Thumbnail"></td>
+                                <td>@copy.Game.Title</td>
+                                <td>
+                                    @*
+                                    <a href="/Colours/view/@Colour.Id" class="btn btn-primary">
+                                        <span class="oi oi-book"></span>
+                                    </a>
+                                    <a href="/Colours/edit/@Colour.Id" class="btn btn-warning">
+                                        <span class="oi oi-pencil"></span>
+                                    </a>
+                                    <button class="btn btn-danger" @onclick="@(()=>Delete(Colour.Id))">
+                                        <span class="oi oi-delete"></span>
+                                    </button>
+                                    *@
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
         }
     </Authorized>
     <NotAuthorized>
@@ -49,9 +86,14 @@
         Copies = await _client.GetFromJsonAsync<List<Copy>>("api/copies");
     }
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#CopyTable");
+    }
+
     //error handling
     public void Dispose()
     {
-        _interceptor.DisposeEvent();
+        js.InvokeVoidAsync("DataTablesDispose", "#CopyTable");
     }
 }

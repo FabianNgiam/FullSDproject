@@ -1,5 +1,6 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
+
 
 namespace FullSDproject.Server.Migrations
 {
@@ -288,10 +289,13 @@ namespace FullSDproject.Server.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    CreditCard = table.Column<int>(type: "int", nullable: false),
                     UserID = table.Column<int>(type: "int", nullable: false),
+                    CreditCard = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Address = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    expiryMonth = table.Column<int>(type: "int", nullable: false),
+                    expiryYear = table.Column<int>(type: "int", nullable: false),
+                    CVV = table.Column<int>(type: "int", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -391,12 +395,12 @@ namespace FullSDproject.Server.Migrations
             migrationBuilder.InsertData(
                 table: "Games",
                 columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdated", "Developer", "Genre", "Price", "Publisher", "Rating", "ReleaseDate", "Requirements", "Thumbnail", "Title", "UpdatedBy" },
-                values: new object[] { 1, "System", new DateTime(2022, 1, 30, 0, 20, 23, 461, DateTimeKind.Local).AddTicks(2846), new DateTime(2022, 1, 30, 0, 20, 23, 462, DateTimeKind.Local).AddTicks(275), "Cheesy Studios", "Puzzle", 2f, "Milk Games", "PG", new DateTime(2021, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Intel Core i5 or higher, NVidia GTX 1650, 8GB of RAM, 10GB of free disk space", "chez.png", "Cheese The Game", "System" });
+                values: new object[] { 1, "System", new DateTime(2022, 2, 6, 13, 26, 59, 744, DateTimeKind.Local).AddTicks(5722), new DateTime(2022, 2, 6, 13, 26, 59, 745, DateTimeKind.Local).AddTicks(4945), "Cheesy Studios", "Puzzle", 2f, "Milk Games", "PG", new DateTime(2021, 10, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Intel Core i5 or higher, NVidia GTX 1650, 8GB of RAM, 10GB of free disk space", "chez.png", "Cheese The Game", "System" });
 
             migrationBuilder.InsertData(
                 table: "Games",
                 columns: new[] { "Id", "CreatedBy", "DateCreated", "DateUpdated", "Developer", "Genre", "Price", "Publisher", "Rating", "ReleaseDate", "Requirements", "Thumbnail", "Title", "UpdatedBy" },
-                values: new object[] { 2, "System", new DateTime(2022, 1, 30, 0, 20, 23, 462, DateTimeKind.Local).AddTicks(1117), new DateTime(2022, 1, 30, 0, 20, 23, 462, DateTimeKind.Local).AddTicks(1121), "Cheesy Studios", "Puzzle", 3f, "Milk Games", "PG", new DateTime(2022, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), "Intel Core i7 or higher, NVidia RTX 2060, 8GB of RAM, 10GB of free disk space", "chez.png", "Cheese The Game 2", "System" });
+                values: new object[] { 2, "System", new DateTime(2022, 2, 6, 13, 26, 59, 745, DateTimeKind.Local).AddTicks(5956), new DateTime(2022, 2, 6, 13, 26, 59, 745, DateTimeKind.Local).AddTicks(5962), "Cheesy Studios", "Puzzle", 3f, "Milk Games", "PG", new DateTime(2022, 12, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), "Intel Core i7 or higher, NVidia RTX 2060, 8GB of RAM, 10GB of free disk space", "chez.png", "Cheese The Game 2", "System" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",

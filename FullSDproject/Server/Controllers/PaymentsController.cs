@@ -36,7 +36,7 @@ namespace FullSDproject.Server.Controllers
         {
             //Refactored
             //return await _context.Payments.ToListAsync();
-            var Payments = await _unitOfWork.Payments.GetAll();
+            var Payments = await _unitOfWork.Payments.GetAll(includes: q => q.Include(x => x.User));
             return Ok(Payments);
         }
 

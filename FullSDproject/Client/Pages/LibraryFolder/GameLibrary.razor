@@ -1,0 +1,57 @@
+﻿@page "/gamelibrary"
+@inject HttpClient _client
+@* Error handling *@
+@inject HttpInterceptorService _interceptor
+@implements IDisposable
+
+<h1>Game Library</h1>
+
+<AuthorizeView>
+    <Authorized>
+        @if (Copies == null)
+        {
+            <div class="alert alert-info">Loading Games...</div>
+        }
+        else
+        {
+            //Below is the container for the different games.
+            <div class="container flex">
+                @foreach (var copy in Copies)
+                {
+                    if (copy.Order.Payment.User.Email == context.User.Identity.Name)
+                    {
+                        <div class="StoreCard">
+                            <div class="card" style="width: 18rem;">
+                                <img class="card-img-top" src="pictures/@copy.Game.Thumbnail">
+                                <div class="card-body">
+                                    <h5 class="card-title">@copy.Game.Title</h5>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        }
+    </Authorized>
+    <NotAuthorized>
+        <p>Log in to see your games.</p>
+    </NotAuthorized>
+</AuthorizeView>
+
+@code {
+    private List<Copy> Copies;
+
+    protected override async Task OnInitializedAsync()
+    {
+        //error handling
+        _interceptor.MonitorEvent();
+        //line break
+        Copies = await _client.GetFromJsonAsync<List<Copy>>("api/copies");
+    }
+
+    //error handling
+    public void Dispose()
+    {
+        _interceptor.DisposeEvent();
+    }
+}

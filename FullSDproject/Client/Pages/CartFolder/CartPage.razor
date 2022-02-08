@@ -1,0 +1,65 @@
+﻿@page "/cart"
+@inject NavigationManager _navManager
+@inject HttpClient _client
+
+
+<h1>Check-out</h1>
+
+<button class="btn btn-primary" @onclick="ToPayment">Add payment method</button>
+
+<AuthorizeView Context="context1">
+    @if (Payments != null)
+    {
+        foreach (var payment in Payments)
+        {
+            if (payment.User.Email == context1.User.Identity.Name)
+            {
+                paymentMethods++;
+            }
+        }
+
+        if (paymentMethods > 0)
+        {
+            <FormComponent ButtonText="Add order" order="order" OnValidSubmit="@addOrder" />
+        }
+        else
+        {
+            <p>You do not have a valid payment option, click below to add a payment method</p>
+            <button class="btn btn-primary" @onclick="ToPayment">Add payment method</button>
+        }
+    }
+</AuthorizeView>
+
+
+
+<hr />
+<button class="btn btn-primary" @onclick="ToStore">Back to store</button>
+
+@code {
+    private int paymentMethods;
+    private IList<Payment> Payments;
+
+    Order order = new Order();
+
+    private void ToStore()
+    {
+        _navManager.NavigateTo("/store");
+    }
+
+    private void ToPayment()
+    {
+        _navManager.NavigateTo("/payment");
+    }
+
+    private async Task addOrder()
+    {
+        await _client.PostAsJsonAsync("api/orders", order);
+        _navManager.NavigateTo("/add-copy/");
+    }
+
+    protected async override Task OnInitializedAsync()
+    {
+        paymentMethods = 0;
+        Payments = await _client.GetFromJsonAsync<List<Payment>>("api/payments");
+    }
+}

@@ -1,0 +1,19 @@
+﻿@page "/add-copy"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+@* THIS IS FOR TESTING AND DEBUGGING *@
+
+<h3>Publish new game</h3>
+
+<FormComponent ButtonText="Publish" copy="copy" OnValidSubmit="@addCopy" />
+
+@code {
+    Copy copy = new Copy();
+
+    private async Task addCopy()
+    {
+        await _client.PostAsJsonAsync("api/copies", copy);
+        _navManager.NavigateTo("/gameLibrary/");
+    }
+}

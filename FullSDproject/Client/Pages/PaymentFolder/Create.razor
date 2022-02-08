@@ -1,0 +1,17 @@
+﻿@page "/payment"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+<h3>Add-payment</h3>
+
+<FormComponent ButtonText="Add payment" payment="payment" OnValidSubmit="@AddPayment" />
+
+@code {
+    Payment payment = new Payment();
+
+    private async Task AddPayment()
+    {
+        await _client.PostAsJsonAsync("api/payments", payment);
+        _navManager.NavigateTo("/cart/");
+    }
+}

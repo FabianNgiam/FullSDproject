@@ -1,4 +1,4 @@
-﻿@page "/store"
+@page "/store"
 @inject NavigationManager NavManager
 @inject HttpClient _client
 @inject IJSRuntime js
@@ -16,21 +16,6 @@
 else
 {
     //Below is the container for the different games.
-    @*<div class="container flex">
-            @foreach (var game in Games)
-            {
-                <div class="StoreCard">
-                    <div class="card" style="width: 18rem;">
-                        <img class="card-img-top" src="pictures/@game.Thumbnail">
-                        <div class="card-body">
-                            <h5 class="card-title">@game.Title</h5>
-                            <p class="card-text">@game.Publisher</p>
-                            <a href="" class="btn btn-primary">@(game.Price.ToString("C"))</a>
-                        </div>
-                    </div>
-                </div>
-            }
-        </div>*@
     <table class="table table-responsive" id="StoreTable">
         <thead>
             <tr>
@@ -63,11 +48,10 @@ else
                 </tr>
             }
         </tbody>
-    </table>
 }
 
-<hr />
-<footer>&copy The Cyclosion 2021-2022</footer>
+        <hr />
+        <footer>&copy The Cyclosion 2021-2022</footer>
 @code {
     private void ToCart()
     {
@@ -83,6 +67,10 @@ else
         //line break
         Games = await _client.GetFromJsonAsync<List<Game>>("api/games");
     }
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable","#bookingsTable");
+    }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -94,4 +82,4 @@ else
     {
         js.InvokeVoidAsync("DataTablesDispose", "#StoreTable");
     }
-}
+    }

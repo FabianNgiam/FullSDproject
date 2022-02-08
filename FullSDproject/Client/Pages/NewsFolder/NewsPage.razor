@@ -1,6 +1,6 @@
 ﻿@page "/news-page"
 @inject HttpClient _client
-
+@inject IJSRuntime js
 @* Error handling *@
 @inject HttpInterceptorService _interceptor
 @implements IDisposable
@@ -14,19 +14,53 @@
 else
 {
     //Below is the container for the different games.
-    <div class="container flex">
-        @foreach (var news in News)
-        {
-            <div class="StoreCard">
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                        <h5 class="card-title">@news.Game.Title</h5>
-                        <p class="card-text">@news.NewsEntry</p>
+    @*<div class="container flex">
+            @foreach (var news in News)
+            {
+                <div class="StoreCard">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">@news.Game.Title</h5>
+                            <p class="card-text">@news.NewsEntry</p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        }
-    </div>
+            }
+        </div>*@
+
+    <table class="table table-responsive" id="NewsTable">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Entry</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var news in News)
+            {
+                <tr>
+                    <td>@news.Game.Title</td>
+                    <td>@news.Writer</td>
+                    <td>@news.NewsEntry</td>
+                    <td>
+                        @*
+                            <a href="/Colours/view/@Colour.Id" class="btn btn-primary">
+                                <span class="oi oi-book"></span>
+                            </a>
+                            <a href="/Colours/edit/@Colour.Id" class="btn btn-warning">
+                                <span class="oi oi-pencil"></span>
+                            </a>
+                            <button class="btn btn-danger" @onclick="@(()=>Delete(Colour.Id))">
+                                <span class="oi oi-delete"></span>
+                            </button>
+                        *@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
 
 @code {
@@ -40,9 +74,14 @@ else
         News = await _client.GetFromJsonAsync<List<News>>("api/news");
     }
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#NewsTable");
+    }
+
     //error handling
     public void Dispose()
     {
-        _interceptor.DisposeEvent();
+        js.InvokeVoidAsync("DataTablesDispose", "#NewsTable");
     }
 }

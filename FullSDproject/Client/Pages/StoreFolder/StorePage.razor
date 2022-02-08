@@ -2,9 +2,8 @@
 @inject NavigationManager NavManager
 @inject HttpClient _client
 @inject IJSRuntime js
-
 @* Error handling *@
-@inject HttpInterceptorService _interceptor 
+@inject HttpInterceptorService _interceptor
 @implements IDisposable
 
 <h1>Store</h1>
@@ -17,21 +16,54 @@
 else
 {
     //Below is the container for the different games.
-    <div class="container flex">
-        @foreach (var game in Games)
-        {
-            <div class="StoreCard">
-                <div class="card" style="width: 18rem;">
-                    <img class="card-img-top" src="pictures/@game.Thumbnail">
-                    <div class="card-body">
-                        <h5 class="card-title">@game.Title</h5>
-                        <p class="card-text">@game.Publisher</p>
-                        <a href="" class="btn btn-primary">@(game.Price.ToString("C"))</a>
+    @*<div class="container flex">
+            @foreach (var game in Games)
+            {
+                <div class="StoreCard">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="pictures/@game.Thumbnail">
+                        <div class="card-body">
+                            <h5 class="card-title">@game.Title</h5>
+                            <p class="card-text">@game.Publisher</p>
+                            <a href="" class="btn btn-primary">@(game.Price.ToString("C"))</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        }
-    </div>
+            }
+        </div>*@
+    <table class="table table-responsive" id="StoreTable">
+        <thead>
+            <tr>
+                <th>Thumbnail</th>
+                <th>Title</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var game in Games)
+            {
+                <tr>
+                    <td><img class="card-img-top" src="pictures/@game.Thumbnail"></td>
+                    <td>@game.Title</td>
+                    <td>@(game.Price.ToString("C"))</td>
+                    <td>
+                        @*
+                        <a href="/Colours/view/@Colour.Id" class="btn btn-primary">
+                            <span class="oi oi-book"></span>
+                        </a>
+                        <a href="/Colours/edit/@Colour.Id" class="btn btn-warning">
+                            <span class="oi oi-pencil"></span>
+                        </a>
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(Colour.Id))">
+                            <span class="oi oi-delete"></span>
+                        </button>
+                        *@
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
 
 <hr />
@@ -52,9 +84,14 @@ else
         Games = await _client.GetFromJsonAsync<List<Game>>("api/games");
     }
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        await js.InvokeVoidAsync("AddDataTable", "#StoreTable");
+    }
+
     //error handling
     public void Dispose()
     {
-        _interceptor.DisposeEvent();
+        js.InvokeVoidAsync("DataTablesDispose", "#StoreTable");
     }
 }

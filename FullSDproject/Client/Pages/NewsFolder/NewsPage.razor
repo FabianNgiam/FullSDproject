@@ -5,7 +5,7 @@
 @inject HttpInterceptorService _interceptor
 @implements IDisposable
 
-<h3>NewsPage</h3>
+<h3>News Page</h3>
 
 @if (News == null)
 {
@@ -45,14 +45,14 @@ else
                     <td>@news.Writer</td>
                     <td>@news.NewsEntry</td>
                     <td>
-                        @*
-                            <a href="/Colours/view/@Colour.Id" class="btn btn-primary">
+                        
+                            <a href="/news/view/@news.Id" class="btn btn-primary">
                                 <span class="oi oi-book"></span>
                             </a>
-                            <a href="/Colours/edit/@Colour.Id" class="btn btn-warning">
+                            <a href="/News/edit/@news.Id" class="btn btn-warning">
                                 <span class="oi oi-pencil"></span>
                             </a>
-                            <button class="btn btn-danger" @onclick="@(()=>Delete(Colour.Id))">
+                            @*<button class="btn btn-danger" @onclick="@(()=>Delete(News.Id))">
                                 <span class="oi oi-delete"></span>
                             </button>
                         *@

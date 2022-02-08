@@ -1,0 +1,21 @@
+﻿@page "/games/edit/{id:int}"
+@inject HttpClient _client
+@inject NavigationManager _navManager
+
+
+<h3>Edit</h3>
+<FormComponent game="game" OnValidSubmit="EditGame"/>
+@code {
+    [Parameter] public int id { get; set; }
+    Game game = new Game();
+    protected async override Task OnParametersSetAsync()
+    {
+        game = await _client.GetFromJsonAsync<Game>($"/api/games/{id}");
+    }
+
+    async Task EditGame()
+    {
+        await _client.PutAsJsonAsync($"/api/games/{id}", game);
+        _navManager.NavigateTo("/store/");
+    }
+}

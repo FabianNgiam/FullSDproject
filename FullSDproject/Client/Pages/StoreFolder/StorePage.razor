@@ -33,17 +33,18 @@ else
                     <td>@game.Title</td>
                     <td>@(game.Price.ToString("C"))</td>
                     <td>
-                        @*
-                        <a href="/Colours/view/@Colour.Id" class="btn btn-primary">
+                        
+                        <a href="/games/view/@game.Id" class="btn btn-primary">
                             <span class="oi oi-book"></span>
                         </a>
-                        <a href="/Colours/edit/@Colour.Id" class="btn btn-warning">
+                        <a href="/games/edit/@game.Id" class="btn btn-warning">
                             <span class="oi oi-pencil"></span>
                         </a>
-                        <button class="btn btn-danger" @onclick="@(()=>Delete(Colour.Id))">
+                        
+                        <button class="btn btn-danger" @onclick="@(()=>Delete(game.Id))">
                             <span class="oi oi-delete"></span>
                         </button>
-                        *@
+                        
                     </td>
                 </tr>
              }
@@ -77,5 +78,15 @@ else
     public void Dispose()
     {
         js.InvokeVoidAsync("DataTablesDispose", "#StoreTable");
+    }
+    async Task Delete(int gameid)
+    {
+        var game = Games.First(q => q.Id == gameid);
+        var confirm = await js.InvokeAsync<bool>("confirm", $"Do you want to delete {game.Title}");
+        if (confirm)
+        {
+            await _client.DeleteAsync($"api/games/{gameid}");
+            await OnInitializedAsync();
+        }
     }
     }
